@@ -15,8 +15,8 @@ def main():
             print("Invalid input. Please enter a valid number.")
     print(f"Total expenses: ${total:.2f}")
     print("Expenses:")
-    for i, expense in enumerate(expense, 1):
-        print(f"{i}. {expense['description']}: ${expense['amount']:.2f}")
+    for i, expenses in enumerate(expense, 1):
+        print(f"{i}. {expenses['description']}: ${expenses['amount']:.2f}")
 
 if __name__ == "__main__":
     main()
