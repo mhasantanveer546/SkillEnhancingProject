@@ -1,7 +1,10 @@
+import json
+
 my_tasks = []
 
 def add_task(task):
     my_tasks.append({"Task": task, "Status": "Pending"})
+    save_tasks()
     print(f'Task "{task}" added successfully!')
     
 def view_tasks():
@@ -9,12 +12,14 @@ def view_tasks():
         print("No tasks in your todo list.")
     else:
         print("Todo List:")
+        
         for i, task in enumerate(my_tasks, 1):
             print(f"{i}. {task['Task']} - {task['Status']}")
 
 def remove_task(task_number):
     if 1 <= task_number <= len(my_tasks):
         removed_task = my_tasks.pop(task_number -1)
+        save_tasks()
         print(f'Task "{removed_task["Task"]}" removed successfully!')
     else:
         print("Invalid task number! Please enter a valid task number.")
@@ -22,11 +27,24 @@ def remove_task(task_number):
 def mark_task_completed(task_number):
     if 1 <= task_number <= len(my_tasks):
         my_tasks[task_number -1]["Status"] = "Completed"
+        save_tasks()
         print(f'Task "{my_tasks[task_number -1]["Task"]}" marked as completed!')
     else:
         print("Invalid task number! Please enter a valid task number.")
 
+def save_tasks():
+    with open("tasks.json","w") as file:
+        json.dump(my_tasks,file)
 
+def load_data():
+    global my_tasks
+    try:
+        with open("tasks.json","r") as file:
+            my_tasks = json.load(file)
+    except FileNotFoundError:
+        my_tasks = []
+        
+load_data()
 while True:
     print("===== Todo List Application =====")
     print("1. Add Task")
