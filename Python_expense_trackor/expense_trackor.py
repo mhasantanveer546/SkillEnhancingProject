@@ -1,14 +1,22 @@
 total = 0 
+expense = []
 def main():
     global total
     while True:
-        expense = input("Enter an expense (or type 'Exit' to quit):")
-        if expense.lower() == 'exit':
+        expense_description = input("Enter an expense description (or type 'Exit' to quit):")
+        if expense_description.lower() == 'exit':
             break
+        expense_amount = input("Enter an expense amount:")
         try:
-            total += float(expense)
+            amount = float(expense_amount)
+            total += amount
+            expense.append({"description": expense_description, "amount": amount})
         except ValueError:
             print("Invalid input. Please enter a valid number.")
     print(f"Total expenses: ${total:.2f}")
+    print("Expenses:")
+    for i, expense in enumerate(expense, 1):
+        print(f"{i}. {expense['description']}: ${expense['amount']:.2f}")
+
 if __name__ == "__main__":
     main()
